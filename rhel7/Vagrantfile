@@ -1,0 +1,17 @@
+#
+#
+# vagrant box add --name rhel/7 --force  rhel-7.4.box
+# SMB account name when using MS account : MicrosoftAccount\me@email.com
+
+# sudo subscription-manager register --auto-attach
+# sudo subscription-manager remove --all
+# sudo subscription-manager unregister
+# sudo subscription-manager clean
+# $env:VAGRANT_LOG= 'warn'
+Vagrant.configure("2") do |config|
+  config.vm.box = "rhel/7"
+  config.vm.provider "hyperv"
+  config.vm.network "public_network", bridge: "DMZ"
+  config.vm.synced_folder ".", "/vagrant", type: "smb", smb_username: "vagrant", smb_password: "vagrant", mount_options: ["username=vagrant","password=vagrant"]
+  #config.ssh.insert_key = false
+end

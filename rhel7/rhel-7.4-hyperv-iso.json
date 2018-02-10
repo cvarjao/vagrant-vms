@@ -1,0 +1,44 @@
+{
+	"variables": {
+		"vm_name": "rhel-7.4-hyperv",
+		"iso_url": "https://developers.redhat.com/download-manager/content/origin/files/sha256/43/431a58c8c0351803a608ffa56948c5a7861876f78ccbe784724dd8c987ff7000/rhel-server-7.4-x86_64-dvd.iso",
+		"iso_sha256": "431a58c8c0351803a608ffa56948c5a7861876f78ccbe784724dd8c987ff7000",
+    "iso_checksum_type": "sha256"
+	},
+
+	"builders": [{
+		"type": "hyperv-iso",
+		"iso_checksum_type": "none",
+		"iso_url": "rhel-server-7.4-x86_64-dvd.iso",
+		"iso_checksum": "431a58c8c0351803a608ffa56948c5a7861876f78ccbe784724dd8c987ff7000",
+		"http_directory": "http",
+    "generation": 2,
+    "communicator":"ssh",
+		"ssh_username": "root",
+		"ssh_password": "vagrant",
+    "ssh_timeout" : "30m",
+		"shutdown_command": "echo 'vagrant'|sudo -S /sbin/halt -h -p",
+		"boot_wait": "5s",    
+		"boot_command": [
+			"<esc><wait>",
+      "c<wait>",
+      "linuxefi /images/pxeboot/vmlinuz inst.stage2=hd:LABEL=RHEL-7.4\\x20Server.x86_64 inst.text quiet ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/anaconda-ks.cfg<enter><wait>",
+      "initrdefi /images/pxeboot/initrd.img<enter><wait>",
+      "boot<enter><wait>"
+      
+		]
+	}],
+	"provisioners": [{
+		"type": "shell",
+		"scripts": [
+			"scripts/vagrant.sh",
+			"scripts/sshd.sh",
+			"scripts/cleanup.sh"
+		]
+	}],
+	"post-processors": [{
+		"type": "vagrant",
+		"output": "rhel-7.4.box",
+		"keep_input_artifact": true
+	}]
+}
