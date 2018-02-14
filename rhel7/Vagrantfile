@@ -12,7 +12,5 @@ Vagrant.configure("2") do |config|
   config.vm.box = "rhel/7"
   config.vm.provider "hyperv"
   config.vm.network "public_network", bridge: "DMZ"
-  config.vm.synced_folder ".", "/vagrant", type: "rsync"
-  #config.vm.synced_folder ".", "/vagrant", type: "smb", smb_username: "vagrant", smb_password: "vagrant", mount_options: ["username=vagrant","password=vagrant"]
-  #config.ssh.insert_key = false
+  config.vm.synced_folder ".", "/vagrant", type: "rsync", rsync__exclude: [".git/", "*.box", "*.iso", "output-*/", "packer_cache/", "http/"]
 end

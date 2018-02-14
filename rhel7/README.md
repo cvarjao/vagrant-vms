@@ -9,9 +9,18 @@ The .iso image file can be downloaded from [Red Hat Developer Program](https://d
 
 
 ## Building
+
+Create secrets.json file
+```
+{
+  "rhn_user": "<RedHat Developer Network username/e-mail>",
+  "rhn_password": "<RedHat Developer Network password>"
+}
+```
+
 ```powershell
 $env:PACKER_LOG=1
-packer build -force -only=virtualbox-iso rhel-7.4-hyperv-iso.json
+packer build -force -only=virtualbox-iso "-var-file=secrets.json" rhel-7.4-hyperv-iso.json
 ```
 
 ```powershell

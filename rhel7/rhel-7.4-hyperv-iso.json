@@ -3,7 +3,9 @@
 		"vm_name": "rhel-7.4-hyperv",
 		"iso_url": "https://developers.redhat.com/download-manager/content/origin/files/sha256/43/431a58c8c0351803a608ffa56948c5a7861876f78ccbe784724dd8c987ff7000/rhel-server-7.4-x86_64-dvd.iso",
 		"iso_sha256": "431a58c8c0351803a608ffa56948c5a7861876f78ccbe784724dd8c987ff7000",
-    "iso_checksum_type": "sha256"
+    "iso_checksum_type": "sha256",
+    "rhn_user": "username",
+    "rhn_password": "password"
 	},
 
 	"builders": [{
@@ -50,10 +52,16 @@
 }],
 	"provisioners": [{
 		"type": "shell",
+    "execute_command": "{{.Vars}} sudo -E -S bash '{{.Path}}'",
+    "environment_vars": [
+      "RHN_SUBSCRIPTION_USER={{user `rhn_user`}}",
+      "RHN_SUBSCRIPTION_PASSWORD={{user `rhn_password`}}"
+    ],
 		"scripts": [
 			"scripts/vagrant.sh",
 			"scripts/sshd.sh",
-			"scripts/cleanup.sh"
+			"scripts/register.sh",
+      "scripts/cleanup.sh"
 		]
 	}],
 	"post-processors": [{
