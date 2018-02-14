@@ -9,12 +9,16 @@ The .iso image file can be downloaded from [Red Hat Developer Program](https://d
 
 
 ## Building
-
+```powershell
 $env:PACKER_LOG=1
-./packer build -force rhel-7.4-hyperv-iso.json
+packer build -force -only=virtualbox-iso rhel-7.4-hyperv-iso.json
+```
 
+```powershell
 $env:VAGRANT_LOG=info
+vagrant box add --name rhel/7 --force rhel-7.4-vbox.box
 vagrant up
+```
 
 ## References
 https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/installation_guide/sect-consoles-logs-during-installation-x86

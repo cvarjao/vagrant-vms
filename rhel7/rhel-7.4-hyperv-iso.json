@@ -27,7 +27,27 @@
       "boot<enter><wait>"
       
 		]
-	}],
+	},{
+  "type": "virtualbox-iso",
+  "guest_os_type": "RedHat_64",
+  "guest_additions_mode": "disable",
+	"iso_checksum_type": "none",
+	"iso_url": "rhel-server-7.4-x86_64-dvd.iso",
+	"iso_checksum": "431a58c8c0351803a608ffa56948c5a7861876f78ccbe784724dd8c987ff7000",
+  "http_directory": "http",
+  "ssh_username": "root",
+  "ssh_password": "vagrant",
+  "communicator":"ssh",
+  "ssh_timeout" : "30m",
+  "shutdown_command": "echo 'packer' | sudo -S shutdown -P now",
+  "boot_wait": "5s",
+  "boot_command": [
+    "<esc><wait>",
+    "<esc><wait>",
+    "vmlinuz initrd=initrd.img inst.stage2=hd:LABEL=RHEL-7.4\\x20Server.x86_64 inst.text quiet net.ifnames=0 biosdevname=0 ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/anaconda-ks.cfg<enter><wait>",
+    "<wait>"
+  ]
+}],
 	"provisioners": [{
 		"type": "shell",
 		"scripts": [
@@ -37,8 +57,15 @@
 		]
 	}],
 	"post-processors": [{
+    "only": ["hyperv-iso"],
 		"type": "vagrant",
-		"output": "rhel-7.4.box",
+		"output": "rhel-7.4-hyperv.box",
 		"keep_input_artifact": true
-	}]
+	},{
+    "only": ["virtualbox-iso"],
+		"type": "vagrant",
+		"output": "rhel-7.4-vbox.box",
+		"keep_input_artifact": true
+	}
+  ]
 }
