@@ -7,6 +7,11 @@ The .iso image file can be downloaded from [Red Hat Developer Program](https://d
 * Packer 1.2.0 - https://www.packer.io/downloads.html
 * RHEL 7.4 - https://developers.redhat.com/products/rhel/download/
 
+## Recommended
+* vagrant-multi-putty - https://github.com/nickryand/vagrant-multi-putty
+```
+vagrant plugin install vagrant-multi-putty
+```
 
 ## Building
 

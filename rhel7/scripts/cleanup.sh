@@ -15,6 +15,9 @@ ln -s /dev/null /etc/udev/rules.d/80-net-name-slot.rules
 #passwd -d root
 #passwd -l root
 
+#Create a list of packages installed
+rpm -qa --queryformat='%{NAME}@%{RPMTAG_VERSION}\n' | sort > /root/install.packages.lst
+
 # Clean up yum
 rpm --rebuilddb
 yum clean all
@@ -27,6 +30,7 @@ rm -f /root/anaconda-ks.cfg
 rm -f /root/install.log
 rm -f /root/install.log.syslog
 rm -rf /root/.pki
+
 
 # Clean up /var/log
 >/var/log/cron
