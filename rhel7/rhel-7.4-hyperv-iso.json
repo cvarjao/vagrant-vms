@@ -61,6 +61,7 @@
 			"scripts/vagrant.sh",
 			"scripts/sshd.sh",
 			"scripts/register.sh",
+      "scripts/vbguest.sh",
       "scripts/cleanup.sh"
 		]
 	}],

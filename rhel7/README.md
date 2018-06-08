@@ -31,6 +31,9 @@ packer build -force -only=virtualbox-iso "-var-file=secrets.json" rhel-7.4-hyper
 ```powershell
 $env:VAGRANT_LOG=info
 vagrant box add --name rhel/7 --force rhel-7.4-vbox.box
+
+# findout what adapter to use as bridhe name:
+VBoxManage.exe list bridgedifs
 vagrant up
 ```
 
